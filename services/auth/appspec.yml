@@ -1,0 +1,41 @@
+version: 0.0
+Resources:                                
+  - myLambdaFunction:                     
+      Type: AWS::Lambda::Function
+      Properties:
+        Name: authorizerFunc
+        Code:
+          S3Bucket: org-chart-gemini-demo
+          S3Key: orgchart-serverless.zip
+        Handler: authPolicy/generatePolicy.main
+        Runtime: nodejs14.x
+        Timeout: 30
+        Role: CodeDeployRole
+        TracingConfig:
+          Mode: Active
+  - myLambdaFunction:
+      Type: AWS::Lambda::Function
+      Properties:
+        Name: getRole
+        Code:
+          S3Bucket: org-chart-gemini-demo
+          S3Key: orgchart-serverless.zip
+        Handler: apis/getRoleForUser.getRoleForUser
+        Runtime: nodejs14.x
+        Timeout: 30
+        Role: CodeDeployRole
+        TracingConfig:
+          Mode: Active
+  - myLambdaFunction:
+      Type: AWS::Lambda::Function
+      Properties:
+        Name: verifyMSALToken
+        Code:
+          S3Bucket: org-chart-gemini-demo
+          S3Key: orgchart-serverless.zip
+        Handler: apis/verifyLogin.verifyLogin
+        Runtime: nodejs14.x
+        Timeout: 30
+        Role: CodeDeployRole
+        TracingConfig:
+          Mode: Active
